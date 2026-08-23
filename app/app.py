@@ -152,8 +152,8 @@ if system_ready:
             potassium = st.sidebar.slider("Potassium (mEq/L):", 2.0, 7.0, 4.1, step=0.1)
             bun = st.sidebar.slider("BUN (mg/dL):", 3.0, 100.0, 18.0, step=1.0)
             
-            # Reconstruct manual profile
-            manual_record = X_train.median(numeric_only=True).to_dict()
+            # Reconstruct manual profile using np.nan for un-slid fields (letting pipeline's SimpleImputer handle imputation)
+            manual_record = {col: np.nan for col in X.columns}
             manual_record["race"] = race
             manual_record["admission_type"] = admission_type
             manual_record["insurance"] = insurance
